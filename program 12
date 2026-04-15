@@ -1,0 +1,25 @@
+from collections import deque
+
+def bfs(g, start):
+    v = set([start])
+    q = deque([start])
+
+    while q:
+        n = q.popleft()
+        print(n, end=" ")
+        for i in g[n]:
+            if i not in v:
+                v.add(i)
+                q.append(i)
+
+g = {
+    2: [3, 4],
+    3: [5, 6],
+    4: [7, 8],
+    5: [],
+    6: [],
+    7: [],
+    8: []
+}
+
+bfs(g, 2)
