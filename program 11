@@ -1,0 +1,35 @@
+from collections import deque
+
+def water_jug(a, b, target):
+    visited = set()
+    q = deque([((0, 0), [])])
+
+    while q:
+        (x, y), path = q.popleft()
+
+        if (x, y) in visited:
+            continue
+        visited.add((x, y))
+
+        path = path + [(x, y)]
+
+        if x == target or y == target:
+            for p in path:
+                print(p)
+            return
+
+        q.append(((a, y), path))  # fill A
+        q.append(((x, b), path))  # fill B
+        q.append(((0, y), path))  # empty A
+        q.append(((x, 0), path))  # empty B
+
+        # pour A → B
+        pour = min(x, b - y)
+        q.append(((x - pour, y + pour), path))
+
+        # pour B → A
+        pour = min(y, a - x)
+        q.append(((x + pour, y - pour), path))
+
+# Example
+water_jug(5, 3, 4)
